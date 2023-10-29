@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Acey Deucey</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+  <header>
+    <h1>Acey Deucey</h1>
+  </header>
+  <main>
+    <section id="game-board" aria-label="Game Board">
+      <div id="card1" class="card">
+        <div id="card1-image"></div>
+        <button id="ace-high-button-1" class="ace-button" style="display: none;">High</button>
+        <button id="ace-low-button-1" class="ace-button" style="display: none;">Low</button>
+      </div>
+      <div id="card2" class="card">
+        <div id="card2-image"></div>
+      </div>
+      <div id="card3" class="card">
+        <div id="card3-image"></div>
+        <button id="ace-high-button-3" class="ace-button" style="display: none;">High</button>
+        <button id="ace-low-button-3" class="ace-button" style="display: none;">Low</button>
+      </div>
+    </section>
+    <section id="controls" aria-label="Controls">
+      <input id="bet-input" type="number" min="1" value="1" aria-label="Bet Amount">
+      <button id="bet-button" disabled>Bet</button>
+      <button id="draw-button" disabled>Draw</button>
+      <button id="new-game-button" disabled>New Game</button>
+      <button id="rules-button">Rules</button>
+    </section>
+    <section id="info" aria-label="Game Info">
+      <p>Chips: <span id="chips-count"></span></p>
+      <p>Pot: <span id="pot-count"></span></p>
+      <p id="result"></p>
+    </section>
+  </main>
+  <script src="v5.js"></script>
+</body>
+
+</html>
