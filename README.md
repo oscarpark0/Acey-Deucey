@@ -20,4 +20,4 @@ After the first player has finished, the dealer clears away the cards and places
 
 If at any time, the pot has no more chips in it (because a player has "bet the pot" and won), each player again puts in one chip to restore the pot.
 
-When every player has had a turn to bet, the deal passes to the player on the dealer's left, and the game continues.`
+When every player has had a turn to bet, the deal passes to the player on the dealer's left, and the game continues.
