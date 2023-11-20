@@ -157,8 +157,6 @@ async function shuffleDeck() {
     console.error('Shuffle deck failed', error);
   }
 }
-
-// Deal cards
 async function dealCards(count) {
   //console.log(`Dealing ${count} cards`);
   try {
@@ -176,7 +174,7 @@ async function dealCards(count) {
   }
   displayHandHistory();
 }
-// Deal the first and third cards
+// Deal cards
 async function dealInitialCards() {
   try {
     [card1] = await dealCards(1);
@@ -209,20 +207,9 @@ async function dealInitialCards() {
     } else {
       [card3] = await dealCards(1);
       displayCard(card3, 'card3');
-      if (card1.value === card3.value && playerChips >= 4) {
-       // let split = confirm("You have drawn two identical cards. Do you want to split and play 2 new hands? This will cost you 4 chips.");
-        if (split) {
-          playerChips -= 4; // deduct 4 chips from the player's chips
-          updateDisplay();
-          let [newCard1, newCard2] = await dealCards(2); // draw 2 new cards
-          displayCard(newCard1, 'card2a'); // display the new cards
-          displayCard(newCard2, 'card2b');
-          document.getElementById('split-cards').style.display = 'block'; // show the split cards
-        } else {
-          document.getElementById('split-cards').style.display = 'none';
-          document.getElementById('card2').style.display = 'block'; // hide the split cards
-        }
-      } else if (card1.value === card3.value) {
+
+      // Check for pair
+      if (card1.value === card3.value) {
         playerChips += 2;
         updateDisplay();
         resultElement.textContent = 'Automatic Win! You got a pair. +2 chips.';
@@ -234,10 +221,6 @@ async function dealInitialCards() {
           shuffleDeck();
         }, 2000);  // 2000 milliseconds = 2 seconds
       } else {
-        // Hide the split cards and show card2
-        document.getElementById('split-cards').style.display = 'none';
-        document.getElementById('card2').style.display = 'block';
-
         // Enable the buttons if no pair is drawn and card 1 is not an Ace
         bet1Button.disabled = false;
         bet5Button.disabled = false;
@@ -298,8 +281,11 @@ function updateDisplay() {
   document.getElementById('chips-count').textContent = playerChips;
   document.getElementById('pot-count').textContent = pot;
   bet1Button.disabled = (playerChips < 1);
+  bet1Button.classList.toggle('disabled', bet1Button.disabled);
   bet5Button.disabled = (playerChips < 5);
+  bet5Button.classList.toggle('disabled', bet5Button.disabled);
   shootThePotButton.disabled = (pot === 0);
+  shootThePotButton.classList.toggle('disabled', shootThePotButton.disabled);
 }
 
 
