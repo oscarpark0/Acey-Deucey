@@ -18,18 +18,38 @@
         <button id="ace-high-button-1" class="ace-button" style="display: none;">High</button>
         <button id="ace-low-button-1" class="ace-button" style="display: none;">Low</button>
       </div>
+      <div id="split-cards" style="display: none;">
+        <div id="split-hand-1">
+          <div id="card2a" class="card">
+            <div id="card2a-image"></div>
+          </div>
+        
+          <div id="card3a" class="card">
+            <div id="card3a-image"></div>
+          </div>
+        </div>
+        <div id="split-hand-2">
+          <div id="card2b" class="card">
+            <div id="card2b-image"></div>
+          </div>
+          <div id="card3b" class="card">
+            <div id="card3b-image"></div>
+          </div>
+        </div>
+      </div>
       <div id="card2" class="card">
         <div id="card2-image"></div>
       </div>
       <div id="card3" class="card">
         <div id="card3-image"></div>
-        <button id="ace-high-button-3" class="ace-button" style="display: none;">High</button>
-        <button id="ace-low-button-3" class="ace-button" style="display: none;">Low</button>
       </div>
     </section>
     <section id="controls" aria-label="Controls">
-      <input id="bet-input" type="number" min="1" value="1" aria-label="Bet Amount">
-      <button id="bet-button" disabled>Bet</button>
+      <button id="shoot-the-pot-button" disabled>Shoot the Pot</button>
+      <!-- <input id="bet-input" type="number" min="1" value="1" aria-label="Bet Amount"> -->
+      <!-- <button id="bet-button" disabled>Bet</button> -->
+      <button id="bet-1-button" disabled>Bet 1</button>
+      <button id="bet-5-button" disabled>Bet 5</button>
       <button id="draw-button" disabled>Draw</button>
       <button id="new-game-button" disabled>New Game</button>
       <button id="rules-button">Rules</button>
@@ -39,6 +59,7 @@
       <p>Pot: <span id="pot-count"></span></p>
       <p id="result"></p>
     </section>
+    <section id="hand-history" aria-label="Hand History"></section>
   </main>
   <script src="v5.js"></script>
 </body>
