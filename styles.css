@@ -10,10 +10,34 @@ body {
   margin: 0;
   background-color: #cff2fd;
   color: #000000;
+  background-image: url('https://wallpapercave.com/wp/wp4035419.jpg'); /* replace with your image URL */
 }
 
 h1 {
   text-align: center;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:active {
+  background-color: #2a772f;
+}
+
+button.disabled {
+  background-color: #ccc;
+  color: #888;
+  cursor: not-allowed;
 }
 
 #game-board {
@@ -21,6 +45,9 @@ h1 {
   justify-content: space-around;
   max-width: 90vw;
   margin: auto;
+  background-image: url('https://greenfelt.net/cache/greenfelt-tile-b02b9a4da719a7d2cc93bd1df4879bd6.jpg'); /* replace with your image URL */
+  background-size: cover;
+  background-position: center;
 }
 
 .card {
@@ -31,6 +58,12 @@ h1 {
   border: 1px solid black;
   background-color: white;
   margin: 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 .card img {
@@ -87,6 +120,10 @@ tr:nth-child(even) {
   align-items: center;
   max-width: 90vw;
   margin: auto;
+  background-color: rgba(20, 70, 24, 0.9);
+  color: white;
+  padding: 0.1rem;
+  border-radius: 15px;
 }
 
 .common-styles {
@@ -105,9 +142,23 @@ tr:nth-child(even) {
   flex-direction: column;
 }
 
-#info {
-  text-align: center;
+#hand-history {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
   padding: 1rem;
+  border-radius: 15px;
+  margin: 1rem;
+  min-height: 100px;
+}
+
+#info {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 1rem;
+  border-radius: 15px;
+  text-align: center;
+  margin: 1rem;
+  min-height: 125px;
 }
 
 #rules-button {
@@ -136,6 +187,15 @@ tr:nth-child(even) {
     padding: 0.5rem;
     margin: 0.5rem;
     border-radius: 5px;
+    background-color: #ff7e5f;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    border-radius: 25px;
+    box-shadow: 10px 10px 5px grey;
   }
 
   #controls button {
