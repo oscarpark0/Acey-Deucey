@@ -137,7 +137,7 @@ tr:nth-child(even) {
   /* Adding a new style for buttons and inputs on small screens */
   #controls button,
   #controls input {
-    font-size: 18px;
+    font-size: 24px;
     /* adjust this value as needed */
   }
 
