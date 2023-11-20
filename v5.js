@@ -73,11 +73,6 @@ When every player has had a turn to bet, the deal passes to the player on the de
       let card1Value = card1Element ? getCardRank(card1Element.getAttribute('data-value'), '1') : null;
       let card2Value = getCardRank(card2.value);
       let card3Value = card3Element ? getCardRank(card3Element.getAttribute('data-value'), '3') : null;
-      console.log('Card1 value attribute:', card1Value);
-      console.log('Card3 value attribute:', card3Value);
-      console.log('Card1 value:', card1Value);
-      console.log('Card2 value:', card2Value);
-      console.log('Card3 value:', card3Value);
       // checking if card2Value equals to card1Value or card3Value
       if (card2Value === card1Value || card2Value === card3Value) {
         playerChips -= playerBet;  // decrease player's chips by the bet
