@@ -285,9 +285,9 @@ function displayHandHistory() {
 
   handHistoryElement.appendChild(table);
 
-  const handHeight = handHistoryElement.firstChild.offsetHeight;
+ // const handHeight = handHistoryElement.firstChild.offsetHeight;
 
-  handHistoryElement.style.height = `${handHeight * 4}px`;
+//  handHistoryElement.style.height = `${handHeight * 4}px`;
 }
 
 // Update chips and pot display
