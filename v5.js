@@ -135,7 +135,7 @@ The Ante
   // New game button event listener
   newGameButton.addEventListener('click', function() {
     resultElement.textContent = '';
-    playerChips = 50;
+    playerChips = 100;
     pot = 0;
     updateDisplay();
     shuffleDeck();
