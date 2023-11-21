@@ -115,13 +115,20 @@ button:disabled, .ace-button:disabled {
 
 @media screen and (max-width: 600px) {
   #game-board {
-    flex-direction: row;
-    justify-content: space-around;
+    position: relative;
+  }
+  #card2 {
+    position: relative;
+    z-index: 2;
   }
   #side-cards {
+    position: absolute;
+    top: 50%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 1;
   }
   .card {
     max-width: 80vw;
