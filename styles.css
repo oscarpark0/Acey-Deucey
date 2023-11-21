@@ -115,7 +115,9 @@ button:disabled, .ace-button:disabled {
 
 @media screen and (max-width: 600px) {
   #game-board {
-    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
   }
   #card2 {
     position: relative;
