@@ -1,5 +1,5 @@
 let deck_id;
-let playerChips = 50;
+let playerChips = 100;
 let pot = 0;
 let aceValue = null;
 let handHistory = [];
@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
           aceValue = (type === 'high') ? 14 : 1;
           displayAceButtons('1', 'none');
+          if (playerChips >= pot && pot > 0) {
+            shootThePotButton.disabled = false;
+          }
         });
       } else {
         console.error(`Button with id ace-${type}-button-1 not found`);
@@ -57,11 +60,12 @@ The Ante
     resultElement.textContent = '';
     dealInitialCards();
     drawButton.disabled = true;
-    shootThePotButton.disabled = false;
+    if (pot > 0) {
+      shootThePotButton.disabled = false;
+    }
     bet1Button.disabled = false;
     bet5Button.disabled = false;
   });
-
 
 
   function processBet(betAmount, winMessage = 'Win! Nice.', loseMessage = 'Lose! Darn.') {
@@ -116,10 +120,12 @@ The Ante
 
   bet1Button.addEventListener('click', function() {
     processBet(1);
+    shootThePotButton.disabled = true;
   });
 
   bet5Button.addEventListener('click', function() {
     processBet(5);
+    shootThePotButton.disabled = true;
   });
 
   shootThePotButton.addEventListener('click', function() {
@@ -184,21 +190,26 @@ async function dealInitialCards() {
     if (card1.value === 'ACE') {
       displayAceButtons('1', 'block');
       shootThePotButton.disabled = true;
-      displayBackOfCard('card3'); // Display the back of card in card 3 position
+      bet1Button.disabled = true;  
+      bet5Button.disabled = true;  
+      displayBackOfCard('card3'); 
 
       // Add event listener to Ace high and low buttons
       ['high', 'low'].forEach(type => {
         const button = document.getElementById(`ace-${type}-button-1`);
         if (button) {
-          button.addEventListener('click', function() {
+          button.addEventListener('click', async function() {
             aceValue = (type === 'high') ? 14 : 1;
             displayAceButtons('1', 'none');
-            dealCards(1).then(([card3]) => {
-              displayCard(card3, 'card3');
-              bet1Button.disabled = false;
-              bet5Button.disabled = false;
-              drawButton.disabled = true;
-            });
+            if (playerChips >= pot && pot > 0) {
+              shootThePotButton.disabled = false;
+            }
+            bet1Button.disabled = false;  // Enable the "Bet 1" button
+            bet5Button.disabled = false;  // Enable the "Bet 5" button
+        
+            // Deal the third card
+            [card3] = await dealCards(1);
+            displayCard(card3, 'card3');
           });
         } else {
           console.error(`Button with id ace-${type}-button-1 not found`);
@@ -215,10 +226,14 @@ async function dealInitialCards() {
         resultElement.textContent = 'Automatic Win! You got a pair. +2 chips.';
         bet1Button.disabled = true;
         bet5Button.disabled = true;
+        shootThePotButton.disabled = true;
         setTimeout(function() {
           drawButton.disabled = false;
           resultElement.textContent = ''; // Clear the result message
           shuffleDeck();
+          if (pot > 0) {
+            shootThePotButton.disabled = false;
+          }
         }, 2000);  // 2000 milliseconds = 2 seconds
       } else {
         // Enable the buttons if no pair is drawn and card 1 is not an Ace
