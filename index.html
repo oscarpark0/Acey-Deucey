@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Acey Deucey</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="output.css">
 </head>
 
 <body>
@@ -29,28 +29,26 @@
         <div id="card3-image"></div>
       </div>
     </section>
-    <section id="controls" aria-label="Controls">
-      <section id="gamestats"
-      <p>Chips: <span id="chips-count"></span></p>
-      <p>Pot: <span id="pot-count"></span></p>
-  </section>
-      
+    <nav id="controls" aria-label="Controls">
+      <section id="gamestats">
+        <p>Chips: <span id="chips-count"></span></p>
+        <p>Pot: <span id="pot-count"></span></p>
+      </section>
       <div id="bet-buttons">
         <button id="bet-1-button" class="common-styles" disabled>Bet 1</button>
         <button id="bet-5-button" class="common-styles" disabled>Bet 5</button>
         <button id="shoot-the-pot-button" class="common-styles" disabled>Shoot the Pot</button>
-
       </div>
       <div id="draw-buttons">
         <button id="draw-button" class="common-styles" disabled>Draw</button>
         <p id="result"></p>
       </div>
-    </section>
-    <div id"game-info">
-      <button id="new-game-button" class="common-styles" disabled>New Game</button>
-      <button id="rules-button" class="common-styles">Rules</button>
-    </div>
-    <section id="hand-history" aria-label="Hand History"></section>
+      <div id="game-info">
+        <button id="new-game-button" class="common-styles" disabled>New Game</button>
+        <button id="rules-button" class="common-styles">Rules</button>
+      </div>
+    </nav>
+    <aside id="hand-history" aria-label="Hand History"></aside>
   </main>
   <script src="v5.js"></script>
 </body>
