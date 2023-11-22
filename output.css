@@ -692,7 +692,7 @@ button:disabled, .ace-button:disabled {
   min-width: auto;
   max-width: 600px;
   height: auto;
-  margin-bottom: 15px;
+  margin-bottom: 2px;
   background-image: url('https://greenfelt.net/cache/greenfelt-tile-b02b9a4da719a7d2cc93bd1df4879bd6.jpg');
   background-size: cover;
   background-position: center;
