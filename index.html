@@ -46,11 +46,22 @@
       <div id="game-info">
         <button id="new-game-button" class="common-styles" disabled>New Game</button>
         <button id="rules-button" class="common-styles">Rules</button>
+        <button id="findBugButton">Report a bug</button>
+        <div id="feedbackFormContainer" style="display: none;">
+          <button id="closeFeedbackForm">Close</button>
+          <iframe id="feedbackForm" src="https://forms.gle/MgLdNohkmgY6MnE48" width="640" height="480"></iframe>
+        </div>
       </div>
     </nav>
     <aside id="hand-history" aria-label="Hand History"></aside>
   </main>
   <script src="v5.js"></script>
+  <script src="feedback.js"></script>
+  <script>
+    document.getElementById('closeFeedbackForm').addEventListener('click', function() {
+      document.getElementById('feedbackFormContainer').style.display = 'none';
+    });
+    </script>
 </body>
 
 </html>
