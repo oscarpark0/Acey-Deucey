@@ -68,54 +68,70 @@ The Ante
   });
 
 
-  function processBet(betAmount, winMessage = 'Win! Nice.', loseMessage = 'Lose! Darn.') {
-    let playerBet = betAmount;
-    if (playerChips >= playerBet) {
-      playerChips -= playerBet;  // decrease player's chips by the bet
-      pot += playerBet;  // add the bet to the pot
-      updateDisplay();
-      dealCards(1).then(([card2]) => {
-        displayCard(card2, 'card2');
-        let card1Element = document.getElementById('card1-image').firstElementChild;
-        let card3Element = document.getElementById('card3-image').firstElementChild;
-        let card1Value = card1Element ? getCardRank(card1Element.getAttribute('data-value'), '1') : null;
-        let card2Value = getCardRank(card2.value);
-        let card3Value = card3Element ? getCardRank(card3Element.getAttribute('data-value'), '3') : null;
-        // checking if card2Value equals to card1Value or card3Value
-        if (card2Value === card1Value || card2Value === card3Value) {
-          playerChips -= playerBet;  // decrease player's chips by the bet
-          pot += playerBet;  // add the bet to the pot
-          resultElement.textContent = loseMessage + ' Same Card. Pay Double.';
-        } else if (card2Value > Math.min(card1Value, card3Value) && card2Value < Math.max(card1Value, card3Value)) {
-          let winnings = 2 * playerBet;
-          winnings = (pot < winnings) ? pot : winnings;  // checking if pot < winnings and return pot instead
-          playerChips += winnings;  // adding back to player's chip
-          pot -= winnings;
-          resultElement.textContent = winMessage;
-        } else {
-          resultElement.textContent = loseMessage;
-        }
-        updateDisplay();
-        displayHandHistory();
-        drawButton.disabled = (playerChips > 0) ? false : true;
-        newGameButton.disabled = !drawButton.disabled;
-        bet1Button.disabled = true;
-        bet5Button.disabled = true;
-        shootThePotButton.disabled = true;
-          handHistory.push({
-            result: resultElement.textContent,
-            chips: playerChips,
-            pot: pot,
-            betAmount: playerBet,
-            card1: card1,
-            card2: card2,
-            card3: card3
-          });
-          displayHandHistory();
-      });
-    } else {
+  async function processBet(betAmount, winMessage = 'Win! Nice.', loseMessage = 'Lose! Darn.') {
+    if (playerChips < betAmount) {
       console.error('Not enough chips to bet');
+      return;
     }
+  
+    playerChips -= betAmount;
+    pot += betAmount;
+    updateDisplay();
+  
+    try {
+      const [card2] = await dealCards(1);
+      displayCard(card2, 'card2');
+  
+      const card1Value = getCardValue('card1-image');
+      const card2Value = getCardRank(card2.value);
+      const card3Value = getCardValue('card3-image');
+  
+      if (card2Value === card1Value || card2Value === card3Value) {
+        playerChips -= betAmount;
+        pot += betAmount;
+        resultElement.textContent = `${loseMessage} Same Card. Pay Double.`;
+      } else if (card2Value > Math.min(card1Value, card3Value) && card2Value < Math.max(card1Value, card3Value)) {
+        const winnings = Math.min(2 * betAmount, pot);
+        playerChips += winnings;
+        pot -= winnings;
+        resultElement.textContent = winMessage;
+      } else {
+        resultElement.textContent = loseMessage;
+      }
+  
+      updateDisplay();
+      displayHandHistory();
+      updateButtons();
+      addHandHistory({
+        result: resultElement.textContent,
+        chips: playerChips,
+        pot: pot,
+        betAmount: betAmount,
+      }, card1, card2, card3);
+    } catch (error) {
+      console.error('Deal cards failed', error);
+    }
+  }
+  
+  function getCardValue(elementId) {
+    const element = document.getElementById(elementId).firstElementChild;
+    return element ? getCardRank(element.getAttribute('data-value')) : null;
+  }
+  
+  function updateButtons() {
+    drawButton.disabled = playerChips <= 0;
+    newGameButton.disabled = !drawButton.disabled;
+    bet1Button.disabled = true;
+    bet5Button.disabled = true;
+    shootThePotButton.disabled = true;
+  }
+  
+  function addHandHistory(hand, card1, card2, card3) {
+    hand.card1 = card1;
+    hand.card2 = card2;
+    hand.card3 = card3;
+    handHistory.push(hand);
+    displayHandHistory();
   }
 
   bet1Button.addEventListener('click', function() {
@@ -163,23 +179,20 @@ async function shuffleDeck() {
     console.error('Shuffle deck failed', error);
   }
 }
+
 async function dealCards(count) {
-  //console.log(`Dealing ${count} cards`);
   try {
     let response = await fetch(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=${count}`);
     let data = await response.json();
-    //console.log(`Fetched cards: ${JSON.stringify(data.cards)}`);
-    // check if there are fewer than 3 cards remaining
     if (data.remaining <= 3) {
       shuffleDeck();  // shuffle the deck if there are not enough cards
     }
     return data.cards;
-    ;
   } catch (error) {
     console.error('Deal cards failed', error);
   }
-  displayHandHistory();
 }
+
 // Deal cards
 async function dealInitialCards() {
   try {
@@ -275,19 +288,15 @@ function displayHandHistory() {
       <td>${hand.chips}</td>
       <td>${hand.betAmount}</td>
       <td>${hand.pot}</td>
-      <td><img class="hand-history-card" src="${hand.card1.image}" data-value="${hand.card1.value}"></td>
-      <td><img class="hand-history-card" src="${hand.card2.image}" data-value="${hand.card2.value}"></td>
-      <td><img class="hand-history-card" src="${hand.card3.image}" data-value="${hand.card3.value}"></td>
+      <td>${hand.card1 && hand.card1.image ? `<img class="hand-history-card" src="${hand.card1.image}" data-value="${hand.card1.value}">` : ''}</td>
+      <td>${hand.card2 && hand.card2.image ? `<img class="hand-history-card" src="${hand.card2.image}" data-value="${hand.card2.value}">` : ''}</td>
+      <td>${hand.card3 && hand.card3.image ? `<img class="hand-history-card" src="${hand.card3.image}" data-value="${hand.card3.value}">` : ''}</td>
     `;
     tbody.appendChild(row);
   });
   table.appendChild(tbody);
 
   handHistoryElement.appendChild(table);
-
- // const handHeight = handHistoryElement.firstChild.offsetHeight;
-
-//  handHistoryElement.style.height = `${handHeight * 4}px`;
 }
 
 // Update chips and pot display
