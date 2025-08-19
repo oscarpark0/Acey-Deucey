@@ -6,7 +6,7 @@
 
 /* Base: monochrome with subtle pinstripes */
 body {
-  font-family: ui-monospace, Menlo, Monaco, "Courier New", monospace;
+  font-family: "Chicago", "Charcoal", Geneva, "Lucida Grande", ui-monospace, Menlo, Monaco, "Courier New", monospace;
   background:
     repeating-linear-gradient(90deg, #ececec 0 2px, #f4f4f4 2px 4px);
   color: #111;
@@ -906,3 +906,20 @@ thead th { position: sticky; top: 0; background: #f3f6f4; z-index: 1; }
   #game-board, #controls, #hand-history { width: 100%; }
   .ace-buttons { left: -72px; }
 }
+
+/* De-emphasize and move the Report a bug button out of main UI flow */
+#findBugButton {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 40;
+  font-size: 12px;
+  padding: 6px 10px;
+  opacity: 0.55;
+  background: #efefef;
+  color: #111;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0 #000;
+}
+#findBugButton:hover { opacity: 0.9; transform: translate(-1px, -1px); }
+#findBugButton:active { transform: translate(1px, 1px); }
