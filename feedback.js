@@ -1,11 +1,15 @@
 const findBugButton = document.getElementById('findBugButton');
 const feedbackFormContainer = document.getElementById('feedbackFormContainer');
-const closeFormButton = document.getElementById('closeFormButton');
+const closeFormButton = document.getElementById('closeFeedbackForm');
 
-findBugButton.addEventListener('click', () => {
-  feedbackFormContainer.style.display = 'block'; // Show the form when the button is clicked
-});
+if (findBugButton && feedbackFormContainer) {
+  findBugButton.addEventListener('click', () => {
+    feedbackFormContainer.style.display = 'block';
+  });
+}
 
-closeFormButton.addEventListener('click', () => {
-  feedbackFormContainer.style.display = 'none'; // Hide the form when the close button is clicked
-});
+if (closeFormButton && feedbackFormContainer) {
+  closeFormButton.addEventListener('click', () => {
+    feedbackFormContainer.style.display = 'none';
+  });
+}

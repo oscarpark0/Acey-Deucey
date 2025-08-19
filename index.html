@@ -3,16 +3,17 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Acey Deucey</title>
   <link rel="stylesheet" type="text/css" href="output.css">
 </head>
 
 <body>
-  <header>
-    <h1>Acey Deucey</h1>
+  <header class="site-header">
+    <h1 class="site-title">Acey Deucey</h1>
   </header>
   <main>
-    <section id="game-board" aria-label="Game Board">
+    <section id="game-board" class="board" aria-label="Game Board">
       <div class="card-container">
         <div id="card1" class="card">
           <div id="card1-image"></div>
@@ -29,7 +30,7 @@
         <div id="card3-image"></div>
       </div>
     </section>
-    <nav id="controls" aria-label="Controls">
+    <nav id="controls" class="panel" aria-label="Controls">
       <section id="gamestats">
         <p>Chips: <span id="chips-count"></span></p>
         <p>Pot: <span id="pot-count"></span></p>
@@ -46,22 +47,17 @@
       <div id="game-info">
         <button id="new-game-button" class="common-styles" disabled>New Game</button>
         <button id="rules-button" class="common-styles">Rules</button>
-        <button id="findBugButton">Report a bug</button>
+        <button id="findBugButton" class="common-styles">Report a bug</button>
         <div id="feedbackFormContainer" style="display: none;">
-          <button id="closeFeedbackForm">Close</button>
-          <iframe id="feedbackForm" src="https://forms.gle/MgLdNohkmgY6MnE48" width="640" height="480"></iframe>
+          <button id="closeFeedbackForm" class="common-styles">Close</button>
+          <iframe id="feedbackForm" src="https://forms.gle/MgLdNohkmgY6MnE48" width="640" height="480" title="Feedback form"></iframe>
         </div>
       </div>
     </nav>
-    <aside id="hand-history" aria-label="Hand History"></aside>
+    <aside id="hand-history" class="panel scroll" aria-label="Hand History"></aside>
   </main>
   <script src="v5.js"></script>
   <script src="feedback.js"></script>
-  <script>
-    document.getElementById('closeFeedbackForm').addEventListener('click', function() {
-      document.getElementById('feedbackFormContainer').style.display = 'none';
-    });
-    </script>
 </body>
 
 </html>

@@ -410,7 +410,7 @@ audio,
 iframe,
 embed,
 object {
-  display: inline-lock;
+  display: inline-block;
   /* 1 */
   vertical-align: middle;
   /* 2 */
@@ -637,7 +637,7 @@ button:disabled, .ace-button:disabled {
 }
 
 #controls button {
-  background: linear-gradient(#ffffff, rgb(151, 11, 11) 202, 25);
+  background: linear-gradient(180deg, #ffffff, #970b0b);
   border-radius: 2px;
   box-shadow: 10px 10px 5px grey;
 }
@@ -739,7 +739,7 @@ tr:nth-child(even) {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin: 1;
+  margin: 1rem;
   background-color: rgb(22, 92, 29);
   color: white;
   padding: 0.5rem;
@@ -768,7 +768,43 @@ tr:nth-child(even) {
   min-height: 100px;
   height: 600px;
   width: 600px;
-  overflow-y: visible;
+  overflow-y: auto;
+}
+
+/* Semantic helpers introduced in index.html */
+.site-header {
+  padding: 1rem;
+  text-align: center;
+}
+
+.site-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.board {
+  display: flex;
+  justify-content: center;
+  min-width: auto;
+  max-width: 600px;
+  height: auto;
+  margin-bottom: 2px;
+  background-image: url('https://greenfelt.net/cache/greenfelt-tile-b02b9a4da719a7d2cc93bd1df4879bd6.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.panel {
+  background-color: #f8f8f8;
+  color: #111;
+  border-radius: 12px;
+  padding: 0.75rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+.scroll {
+  overflow-y: auto;
 }
 
 #info {

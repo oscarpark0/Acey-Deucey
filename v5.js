@@ -19,24 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
   newGameButton = document.getElementById('new-game-button');
   shootThePotButton = document.getElementById('shoot-the-pot-button');
 
-  // Event listeners for Ace high or low buttons
-  Array.from({ length: 2 }, (_, i) => i * 2 + 1).forEach(cardNumber => {
-    ['high', 'low'].forEach(type => {
-      const button = document.getElementById(`ace-${type}-button-1`);
-      if (button) {
-        button.addEventListener('click', function() {
-          aceValue = (type === 'high') ? 14 : 1;
-          displayAceButtons('1', 'none');
-          if (playerChips >= pot && pot > 0) {
-            shootThePotButton.disabled = false;
-          }
-        });
-      } else {
-        console.error(`Button with id ace-${type}-button-1 not found`);
-      }
-    });
-  });
-
   // Shuffle deck
   shuffleDeck();
 
@@ -66,7 +48,6 @@ The Ante
     bet1Button.disabled = false;
     bet5Button.disabled = false;
   });
-
 
   async function processBet(betAmount, winMessage = 'Win! Nice.', loseMessage = 'Lose! Darn.') {
     if (playerChips < betAmount) {
@@ -161,100 +142,92 @@ The Ante
     bet5Button.disabled = true;
   });
 
-  // Listen for page loaded event
-  document.addEventListener('DOMContentLoaded', (event) => {
-    resultElement.textContent = '';
-    shuffleDeck();
-  });
-});
-
-// Shuffle deck function
-async function shuffleDeck() {
-  try {
-    let response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1');
-    let data = await response.json();
-    deck_id = data.deck_id;
-    await dealInitialCards();
-  } catch (error) {
-    console.error('Shuffle deck failed', error);
-  }
-}
-
-async function dealCards(count) {
-  try {
-    let response = await fetch(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=${count}`);
-    let data = await response.json();
-    if (data.remaining <= 3) {
-      shuffleDeck();  // shuffle the deck if there are not enough cards
+  // Shuffle deck function
+  async function shuffleDeck() {
+    try {
+      let response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1');
+      let data = await response.json();
+      deck_id = data.deck_id;
+      await dealInitialCards();
+    } catch (error) {
+      console.error('Shuffle deck failed', error);
     }
-    return data.cards;
-  } catch (error) {
-    console.error('Deal cards failed', error);
   }
-}
 
-// Deal cards
-async function dealInitialCards() {
-  try {
-    [card1] = await dealCards(1);
-    displayCard(card1, 'card1');
-    displayBackOfCard('card2');
+  async function dealCards(count) {
+    try {
+      let response = await fetch(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=${count}`);
+      let data = await response.json();
+      if (data.remaining <= 3) {
+        shuffleDeck();  // shuffle the deck if there are not enough cards
+      }
+      return data.cards;
+    } catch (error) {
+      console.error('Deal cards failed', error);
+    }
+  }
 
-    if (card1.value === 'ACE') {
-      displayAceButtons('1', 'block');
-      shootThePotButton.disabled = true;
-      bet1Button.disabled = true;  
-      bet5Button.disabled = true;  
-      displayBackOfCard('card3'); 
+  // Deal cards
+  async function dealInitialCards() {
+    try {
+      [card1] = await dealCards(1);
+      displayCard(card1, 'card1');
+      displayBackOfCard('card2');
 
-      // Add event listener to Ace high and low buttons
-      ['high', 'low'].forEach(type => {
-        const button = document.getElementById(`ace-${type}-button-1`);
-        if (button) {
-          button.addEventListener('click', async function() {
-            aceValue = (type === 'high') ? 14 : 1;
-            displayAceButtons('1', 'none');
-            if (playerChips >= pot && pot > 0) {
+      if (card1.value === 'ACE') {
+        displayAceButtons('1', 'block');
+        shootThePotButton.disabled = true;
+        bet1Button.disabled = true;  
+        bet5Button.disabled = true;  
+        displayBackOfCard('card3'); 
+
+        // Add event listener to Ace high and low buttons (attach once)
+        ['high', 'low'].forEach(type => {
+          const button = document.getElementById(`ace-${type}-button-1`);
+          if (button) {
+            button.onclick = async function() {
+              aceValue = (type === 'high') ? 14 : 1;
+              displayAceButtons('1', 'none');
+              if (playerChips >= pot && pot > 0) {
+                shootThePotButton.disabled = false;
+              }
+              bet1Button.disabled = false;  // Enable the "Bet 1" button
+              bet5Button.disabled = false;  // Enable the "Bet 5" button
+        
+              // Deal the third card
+              [card3] = await dealCards(1);
+              displayCard(card3, 'card3');
+            };
+          } else {
+            console.error(`Button with id ace-${type}-button-1 not found`);
+          }
+        });
+      } else {
+        [card3] = await dealCards(1);
+        displayCard(card3, 'card3');
+
+        // Check for pair
+        if (card1.value === card3.value) {
+          playerChips += 2;
+          updateDisplay();
+          resultElement.textContent = 'Automatic Win! You got a pair. +2 chips.';
+          bet1Button.disabled = true;
+          bet5Button.disabled = true;
+          shootThePotButton.disabled = true;
+          setTimeout(function() {
+            drawButton.disabled = false;
+            resultElement.textContent = ''; // Clear the result message
+            shuffleDeck();
+            if (pot > 0) {
               shootThePotButton.disabled = false;
             }
-            bet1Button.disabled = false;  // Enable the "Bet 1" button
-            bet5Button.disabled = false;  // Enable the "Bet 5" button
-        
-            // Deal the third card
-            [card3] = await dealCards(1);
-            displayCard(card3, 'card3');
-          });
+          }, 2000);  // 2000 milliseconds = 2 seconds
         } else {
-          console.error(`Button with id ace-${type}-button-1 not found`);
+          bet1Button.disabled = false;
+          bet5Button.disabled = false;
+          drawButton.disabled = true;
         }
-      });
-    } else {
-      [card3] = await dealCards(1);
-      displayCard(card3, 'card3');
-
-      // Check for pair
-      if (card1.value === card3.value) {
-        playerChips += 2;
-        updateDisplay();
-        resultElement.textContent = 'Automatic Win! You got a pair. +2 chips.';
-        bet1Button.disabled = true;
-        bet5Button.disabled = true;
-        shootThePotButton.disabled = true;
-        setTimeout(function() {
-          drawButton.disabled = false;
-          resultElement.textContent = ''; // Clear the result message
-          shuffleDeck();
-          if (pot > 0) {
-            shootThePotButton.disabled = false;
-          }
-        }, 2000);  // 2000 milliseconds = 2 seconds
-      } else {
-        // Enable the buttons if no pair is drawn and card 1 is not an Ace
-        bet1Button.disabled = false;
-        bet5Button.disabled = false;
-        drawButton.disabled = true;
       }
-    }
   } catch (error) {
     console.error('Deal initial cards failed', error);
   }
@@ -377,3 +350,4 @@ function getCardRank(value, position) {
     return parseInt(value, 10);
   }
 }
+});
