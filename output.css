@@ -1,3 +1,97 @@
+/* ================================
+   Retro Macintosh (1970s/early-80s) Theme
+   Monochrome, pinstripes, hard borders, pixel vibe
+   Overrides the modern theme above
+   ================================ */
+
+/* Base: monochrome with subtle pinstripes */
+body {
+  font-family: ui-monospace, Menlo, Monaco, "Courier New", monospace;
+  background:
+    repeating-linear-gradient(90deg, #ececec 0 2px, #f4f4f4 2px 4px);
+  color: #111;
+}
+
+.site-header {
+  background: #dcdcdc;
+  border-bottom: 2px solid #000;
+  box-shadow: 0 2px 0 #000;
+}
+.site-title {
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-shadow: none;
+  color: #111;
+}
+
+/* Window-style panels */
+#game-board, #controls, #hand-history, .panel {
+  background:
+    repeating-linear-gradient(0deg, #ffffff 0 1px, #f0f0f0 1px 2px);
+  border: 2px solid #000;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #000;
+}
+
+/* Cards: grayscale to match mono look */
+.card { width: 110px; height: 160px; }
+.card img {
+  filter: grayscale(100%) contrast(110%);
+  image-rendering: pixelated;
+  border-radius: 0;
+}
+
+/* Buttons: hard borders, embossed on active */
+.common-styles {
+  --btn-bg: #e8e8e8;
+  --btn-text: #111;
+  --btn-border: #000;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border-radius: 0;
+  border: 2px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  box-shadow: 3px 3px 0 #000;
+}
+.common-styles:hover { background: #f2f2f2; transform: translate(-1px, -1px); box-shadow: 4px 4px 0 #000; }
+.common-styles:active { background: #d9d9d9; transform: translate(2px, 2px); box-shadow: 1px 1px 0 #000 inset, 0 0 0 #000; }
+.common-styles:disabled { background: #e5e5e5; color: #666; box-shadow: none; border-color: #333; }
+
+#controls { gap: 0.75rem; }
+#gamestats { color: #000; font-weight: 800; }
+
+/* Hand history table: stark borders */
+table { border-collapse: collapse; border-spacing: 0; }
+thead th { background: #dcdcdc; border-bottom: 2px solid #000; position: sticky; top: 0; z-index: 1; }
+th, td { border: 1px solid #000; padding: 6px 8px; background: #fff; }
+tr:nth-child(even) { background: #f5f5f5; }
+
+.hand-history-card { filter: grayscale(100%) contrast(110%); border-radius: 0; box-shadow: none; image-rendering: pixelated; }
+
+/* Ace buttons stack and offset remain; style matches retro */
+.ace-buttons { left: -74px; }
+.ace-button { border: 2px solid #000; background: #e8e8e8; color: #111; box-shadow: 2px 2px 0 #000; }
+
+/* Modal: framed overlay */
+#feedbackFormContainer { background: rgba(0,0,0,0.6); }
+#feedbackFormContainer iframe { filter: grayscale(100%); border: 2px solid #000; border-radius: 0; box-shadow: 6px 6px 0 #000; }
+#feedbackFormContainer #closeFeedbackForm { border-radius: 0; border: 2px solid #000; box-shadow: 2px 2px 0 #000; background: #e8e8e8; color: #111; }
+
+/* Layout tweaks to feel like a classic desktop */
+main { gap: 12px; }
+#game-board { padding: 8px; gap: 6px; }
+#bet-buttons { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+#result { color: #000; font-weight: 800; }
+
+/* Reduce rounded corners throughout */
+input, button, .panel, #controls, #hand-history, #game-board { border-radius: 0 !important; }
+
+/* Responsive: keep retro proportions */
+@media (min-width: 960px) {
+  #controls { width: 340px; }
+}
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 /*
