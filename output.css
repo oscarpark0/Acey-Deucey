@@ -923,3 +923,120 @@ thead th { position: sticky; top: 0; background: #f3f6f4; z-index: 1; }
 }
 #findBugButton:hover { opacity: 0.9; transform: translate(-1px, -1px); }
 #findBugButton:active { transform: translate(1px, 1px); }
+
+/* ================================
+   Theme v2 — Modern Casino Look
+   Scoped to body.theme-v2 to avoid breaking existing themes
+   ================================ */
+
+body.theme-v2 {
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: #eaf7ee;
+  background:
+    radial-gradient(1200px 600px at -10% -20%, rgba(255,255,255,0.08), transparent 60%),
+    radial-gradient(1200px 600px at 110% 10%, rgba(255,255,255,0.06), transparent 60%),
+    conic-gradient(from 230deg at 50% -10%, #0e1f17, #0a1a13, #0e1f17);
+}
+
+.theme-v2 .site-header {
+  background: transparent;
+  padding: 1.25rem 1rem;
+}
+.theme-v2 .site-title {
+  font-weight: 800;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  letter-spacing: 0.4px;
+  color: #eaf7ee;
+  text-shadow: 0 6px 16px rgba(0,0,0,0.5);
+}
+
+/* Layout containers */
+.theme-v2 main { gap: 1rem; }
+.theme-v2 #controls,
+.theme-v2 #hand-history {
+  background: rgba(10, 33, 24, 0.7);
+  color: #eaf7ee;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
+  backdrop-filter: blur(6px) saturate(120%);
+}
+
+/* Game board: premium felt with vignette */
+.theme-v2 #game-board.board {
+  background-image:
+    radial-gradient(180% 80% at 50% -20%, rgba(0,0,0,0.35), transparent 55%),
+    url('https://images.unsplash.com/photo-1615314780361-9bb8f7e8c2a1?q=80&w=1200&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  border-radius: 18px;
+  box-shadow: 0 12px 34px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+  padding: 1rem;
+}
+
+/* Cards */
+.theme-v2 .card { width: 128px; height: 184px; margin: 0.35rem; }
+.theme-v2 .card img {
+  border-radius: 14px;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.55) inset;
+  filter: none !important;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.theme-v2 .card img:hover {
+  transform: translateY(-2px) rotate(0.2deg);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.45), 0 1px 0 rgba(255,255,255,0.5) inset;
+}
+
+/* Buttons */
+.theme-v2 .common-styles {
+  --btn-bg: linear-gradient(180deg, #2bb673 0%, #1e8a57 100%);
+  --btn-text: #f4fff9;
+  --btn-border: rgba(0,0,0,0.35);
+  --btn-hover: linear-gradient(180deg, #31c07d 0%, #219d69 100%);
+  --btn-active: linear-gradient(180deg, #1b7a4f 0%, #176445 100%);
+  border: 0;
+  border-radius: 12px;
+  padding: 0.65rem 0.9rem;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.28), 0 1px 0 rgba(255,255,255,0.35) inset;
+}
+.theme-v2 .common-styles:hover { background: var(--btn-hover); transform: translateY(-1px); }
+.theme-v2 .common-styles:active { background: var(--btn-active); transform: translateY(0); box-shadow: 0 6px 18px rgba(0,0,0,0.3) inset; }
+.theme-v2 .common-styles:disabled { opacity: 0.65; box-shadow: none; filter: grayscale(10%); }
+
+/* Ace button stack */
+.theme-v2 .ace-buttons { left: -78px; }
+.theme-v2 .ace-button { font-size: 14px; padding: 6px 10px; }
+
+/* Stats and result */
+.theme-v2 #gamestats { color: #d5f1df; text-shadow: 0 1px 0 rgba(0,0,0,0.5); }
+.theme-v2 #result { color: #bfffd7; font-weight: 800; text-shadow: 0 1px 0 rgba(0,0,0,0.6); }
+
+/* Hand history */
+.theme-v2 #hand-history { background: rgba(10,33,24,0.7); }
+.theme-v2 table { border-spacing: 0; width: 100%; }
+.theme-v2 thead th { background: rgba(255,255,255,0.06); color: #eaf7ee; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.theme-v2 th, .theme-v2 td { border-bottom: 1px solid rgba(255,255,255,0.06); color: #dff6ea; }
+.theme-v2 tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+.theme-v2 .hand-history-card { border-radius: 8px; box-shadow: 0 6px 16px rgba(0,0,0,0.35); filter: none !important; }
+
+/* Modal overrides */
+.theme-v2 #feedbackFormContainer { background: rgba(0,0,0,0.6); }
+.theme-v2 #feedbackFormContainer iframe { box-shadow: 0 16px 48px rgba(0,0,0,0.55); border-radius: 14px; }
+.theme-v2 #feedbackFormContainer #closeFeedbackForm { background: #163e2b; color: #eaf7ee; border-radius: 10px; }
+
+/* Bug button in-theme */
+.theme-v2 #findBugButton {
+  right: 16px; bottom: 16px; opacity: 0.8;
+  background: linear-gradient(180deg, #2b2b2b 0%, #1a1a1a 100%);
+  color: #f5f5f5; border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+}
+.theme-v2 #findBugButton:hover { opacity: 1; transform: translateY(-1px); }
+.theme-v2 #findBugButton:active { transform: translateY(0); }
+
+/* Responsiveness tweaks */
+@media (max-width: 959.98px) {
+  .theme-v2 .ace-buttons { left: -72px; }
+  .theme-v2 .card { width: 112px; height: 162px; }
+}
