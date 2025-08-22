@@ -1015,9 +1015,9 @@ body.theme-v2 {
 /* Hand history */
 .theme-v2 #hand-history { background: rgba(10,33,24,0.7); }
 .theme-v2 table { border-spacing: 0; width: 100%; }
-.theme-v2 thead th { background: rgba(255,255,255,0.06); color: #eaf7ee; border-bottom: 1px solid rgba(255,255,255,0.08); }
-.theme-v2 th, .theme-v2 td { border-bottom: 1px solid rgba(255,255,255,0.06); color: #dff6ea; }
-.theme-v2 tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+.theme-v2 thead th { background: rgba(0,0,0,0.25); color: #eaf7ee; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.theme-v2 th, .theme-v2 td { background: rgba(0,0,0,0.18); border-bottom: 1px solid rgba(255,255,255,0.06); color: #dff6ea; }
+.theme-v2 tr:nth-child(even) { background: rgba(0,0,0,0.22); }
 .theme-v2 .hand-history-card { border-radius: 8px; box-shadow: 0 6px 16px rgba(0,0,0,0.35); filter: none !important; }
 
 /* Modal overrides */
@@ -1027,13 +1027,25 @@ body.theme-v2 {
 
 /* Bug button in-theme */
 .theme-v2 #findBugButton {
-  right: 16px; bottom: 16px; opacity: 0.8;
+  position: fixed;
+  left: 16px;
+  right: auto;
+  bottom: 16px;
+  z-index: 100;
+  opacity: 0.75;
+  font-size: 11px;
+  padding: 6px 10px;
   background: linear-gradient(180deg, #2b2b2b 0%, #1a1a1a 100%);
-  color: #f5f5f5; border: 1px solid rgba(255,255,255,0.1);
+  color: #f5f5f5;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.35);
 }
 .theme-v2 #findBugButton:hover { opacity: 1; transform: translateY(-1px); }
 .theme-v2 #findBugButton:active { transform: translateY(0); }
+@media (max-width: 560px) {
+  .theme-v2 #findBugButton { left: 10px; bottom: 10px; font-size: 10px; padding: 5px 8px; }
+}
 
 /* Responsiveness tweaks */
 @media (max-width: 959.98px) {
