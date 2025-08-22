@@ -22,19 +22,46 @@ document.addEventListener('DOMContentLoaded', function() {
   // Shuffle deck
   shuffleDeck();
 
-  // Event listener for rules button
-  let rulesButton = document.getElementById('rules-button');
-  let rules = `Rank of Cards
-A (high), K, Q, J, 10, 9, 8, 7, 6, 5, 4, 3, 2, A (low).
+  // Rules modal setup
+  const rulesButton = document.getElementById('rules-button');
+  const rulesModal = document.getElementById('rules-modal');
+  const closeRulesModalBtn = document.getElementById('close-rules-modal');
+  const rulesText = document.getElementById('rules-text');
 
-Object of the Game
-The goal is to be the player with the most chips at the end of the game.
+  const rules = `
+  <p><strong>Rank of Cards</strong><br>
+  A (high), K, Q, J, 10, 9, 8, 7, 6, 5, 4, 3, 2, A (low)</p>
+  <p><strong>Object</strong><br>
+  End with the most chips.</p>
+  <p><strong>Setup</strong><br>
+  You start with 100 chips. Pot starts at 0.</p>
+  <p><strong>How a hand works</strong><br>
+  1) Draw shows Card 1 and Card 3 (unless Card 1 is an Ace).<br>
+  2) Bet 1, Bet 5, or Shoot the Pot.<br>
+  3) Card 2 is drawn. If it falls between Card 1 and Card 3, you win; otherwise you lose. Same card pays double (you pay double).</p>
+  <p><strong>Aces</strong><br>
+  If Card 1 is an Ace, choose High (14) or Low (1) before betting.</p>`;
 
-The Ante
-50 Chips are distributed to the player, and the player puts one chip in the center of the table to form a pool or pot.`;
+  function openRules() {
+    if (!rulesModal) return;
+    if (rulesText) rulesText.innerHTML = rules;
+    rulesModal.style.display = 'flex';
+  }
 
-  rulesButton.addEventListener('click', function() {
-    alert(rules);
+  function closeRules() {
+    if (!rulesModal) return;
+    rulesModal.style.display = 'none';
+  }
+
+  if (rulesButton) rulesButton.addEventListener('click', openRules);
+  if (closeRulesModalBtn) closeRulesModalBtn.addEventListener('click', closeRules);
+  if (rulesModal) {
+    rulesModal.addEventListener('click', (e) => {
+      if (e.target === rulesModal) closeRules();
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeRules();
   });
 
   // Draw button event listener
